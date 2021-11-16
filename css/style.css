@@ -1,0 +1,27 @@
+body {
+    background: #bd1919;
+    font-family:monospace;
+}
+#signin-header {
+    color:black;
+}
+
+#orbutton {
+    color: black;
+    font-family: fantasy;
+}
+
+.mainTitle {
+    text-align: center;
+}
+
+.container {
+    position:absolute;
+    height: X px;
+    width:  Y px;
+    left:15%;
+    top:40%;
+    margin-top:- X/2 px;
+    margin-left:- Y/4 px;
+}
+
