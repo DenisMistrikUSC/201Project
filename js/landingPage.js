@@ -9,6 +9,8 @@ function signIn() {
     event.preventDefault();
     var userName = document.getElementById("username-field").value;
     var passWord = document.getElementById("password-field").value;
+    console.log("in signInfunction ");
+    console.log(userName, passWord);
     /*
     Post should request the JSON file containing the User and Icon
     to verify to user has an account
