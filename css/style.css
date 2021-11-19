@@ -1,28 +1,55 @@
-body {
-    background: #bd1919;
-    font-family:monospace;
-}
-#signin-header {
-    color:black;
-}
 
-#orbutton {
-    color: black;
-    font-family: fantasy;
-}
+h1 {
+    position:absolute;
+    font-family:Chalkduster;
+    color: white;
+    font-size: 130px;
+    left:28%;
+    top:20%;
 
-.mainTitle {
-    text-align: center;
 }
 
 .container {
     position:absolute;
-    height: X px;
-    width: Y px;
-    left:50%;
-    top:50%;
-    margin-top:- X/2 px;
-    margin-left:- Y/4 px;
 
+    left:12%;
+    top:45%;
+ 
 }
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  body {
+    background: #a71e1e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  button {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 900;
+    padding: 1.25rem 2.5rem;
+    font-size: 1rem;
+    border-radius: 3.5rem / 100%;
+    position: relative;
+    min-width: 15rem;
+    max-width: 90vw;
+    overflow: hidden;
+    border: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color :  #ffffff;
+     color:  #d81b1b;
+    transition:0.5s;
+  }
+  button:hover{
+    color:#f01818e7;
+    background-color:#FA7091;
+  }
 
