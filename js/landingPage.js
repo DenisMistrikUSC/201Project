@@ -5,6 +5,10 @@ function login() {
   window.location.href = "signIn.html";
 }
 
+function signUpRedirect() {
+    window.location.href = "signUp.html";
+}
+
 /*
 This function retrives user input and validates with the server
 */
