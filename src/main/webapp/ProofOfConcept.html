@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+            <button type="button" onclick="openSocket();" >Connect</button>
+            <button type="button" onclick="send();" >Start Game</button>
+            <button type="button" onclick="closeSocket();" >Quit</button>
+    </div>
+	<div id="infoLabel">Sketch SC</div>
+	
+	<div id="Round"> </div>
+	<div id="Time"></div>
+	
+	<textarea id="echoText" rows="5" cols="30"></textarea>
+	<form>
+		<input id="message" type="text">
+		<input onclick="send();" value="Send" type="button">
+	</form>
+	<br>
+<!-- Java script for websockets -->
+        <script type="text/javascript">
+                       
+            var connection;
+            var messages = document.getElementById("messages");
+           	var timer;
+           	var roundCount = 2;
+            function openSocket(){
+                // Ensures only one connection is open at a time
+                if(connection !== undefined && connection.readyState !== connection.CLOSED){
+                   writeResponse("WebSocket is already opened.");
+                    return;
+                }
+                // Create a new instance of the websocket
+                connection = new WebSocket("ws://localhost:8080/SketchSC/endpoint1");
+                 
+                /* Binds the listeners to socket */
+                connection.onopen = function(event){
+                    if(event.data === undefined)
+                        return;
+ 
+                    writeResponse(event.data);
+                };
+ 				// # == all players arrived start the game, 
+                connection.onmessage = function(event){
+                	var text = event.data;
+                	if (text.substring(0,1) == "#"){
+                		startGame();
+                	}else{
+                		writeResponse(text);
+                	}
+                    
+                };
+ 
+                connection.onclose = function(event){
+                    writeResponse("Connection closed");
+                };
+                
+            }
+           
+            /* Send message to the server */
+            function send(){
+            	var text = message.value;
+            	message.value = "";
+            	if(timer < 10 && text.length > 0){
+            		text += ("0" + timer);
+            	} else if (text.length > 0){
+            		text += (timer);
+            	}
+                connection.send(text);
+                
+            }
+           function signal(text){
+        	   connection.send(text);
+           }
+           /* Close the socket */
+            function closeSocket(){
+                connection.close();
+            }
+ 			function writeRound(text){
+ 				Round.innerHTML = text;
+ 			}
+ 			function writeTime(text){
+ 				Time.innerHTML = text;
+ 			}
+            function writeResponse(text){
+            	echoText.value += "" + text + "\n";
+            }
+            function startGame(roundCount){
+            	startTimer(20,roundCount);
+            }
+        	function startTimer(duration) {
+            	timer = duration;
+            	var round = 1;
+            	var x = setInterval(function () {
+           		 --timer;
+           		Time.innerHTML = timer;
+           			if(timer == 0 && round >= roundCount){
+           				clearInterval(x);
+           				signal("$");
+           				Round.innerHTML = "Game finished!";
+           			}
+           			else if(timer == 0){
+            			timer = duration;
+            			round++;
+            			Round.innerHTML = "Round " + round;
+            			signal("@");
+            		 }
+            	 } , 1000);
+            }
+           
+           
+        </script>
+</body>
+</html>
