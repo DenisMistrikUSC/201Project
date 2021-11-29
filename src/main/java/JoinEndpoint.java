@@ -29,6 +29,10 @@ public class JoinEndpoint {
 	public void onMessage(String message, Session session) {
 		room.join(message,session);
 	}
+	@OnMessage
+	public void onImage(byte[] data,boolean last, Session session) {
+		
+	}
 	@OnError
     public void onError(Throwable e){
         e.printStackTrace();

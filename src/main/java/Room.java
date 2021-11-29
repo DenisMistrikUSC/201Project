@@ -5,13 +5,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.websocket.Session;
 
 public class Room {
-    private static Room instance = null;
+    private static Room instance = null;  
+    final int playerCount = 2;
     public List<Session> sessions = new ArrayList<Session>();
     public Map<Integer,Integer> scores = new HashMap<Integer,Integer>();
+    public Map<Session,Player> players = new HashMap<Session,Player>();
+    public Session currDrawer;
     static boolean roundRunning = false;
     public int round;
     static List<String> words = Arrays.asList("Coliseum", "Traveller", "Tommy", "Marching Band" ,"Trojan Check", "Village", 
@@ -20,21 +24,51 @@ public class Room {
     	if(mess.isBlank()) {
     		sessions.add(session);
     		scores.put(Integer.parseInt(session.getId()),0);
+    		Player p = new Player("Player " + session.getId(), false,session);
+    		players.put(session,p);
     		sendMessage("Player " + session.getId() + " joined");
-    		if(sessions.size() == 2) {
-    			//startGame();
-    			sendMessage("#");
-    			Collections.shuffle(words);
+    		if(sessions.size() == playerCount) {
+    			startGame();
     		}
-    	} else if(mess.equals("@")) {
-    		round++;
+    	} else if(mess.charAt(0) == '@') {
+    		round = Integer.parseInt(mess.substring(1));
+    		players.get(sessions.get(round-1)).becomeDrawer();
+    		currDrawer = sessions.get(round-1);
+    		try {
+    			sessions.get(round-1).getBasicRemote().sendText("*Your word is " + words.get(round));
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    		System.out.println("Word is " + words.get(round));
     	} else if(mess.equals("$")) {
+    		List<Player> ps = new ArrayList<Player>(players.values());
+    		Collections.sort(ps);
     		int winner = getWinner(scores);
-    		sendMessage("Player " + winner + " won with a score of " + scores.get(winner) + "!");
+    		sendMessage(ps.get(0).getName() + " won with a score of " + ps.get(0).getPoints());
+    	} else if(mess.charAt(0) == '&') {
+    		sendMessage(mess);
+    	} else if(mess.equals("*")) {
+    		players.get(session).stopDrawing();
     	}
     	else {
-    		handleGuess(mess,session);
+    		if(players.get(session).isDrawing() == false) {
+    			handleGuess(mess,session);
+    		}
     	}
+    }
+    public synchronized void startGame() {
+    	sendMessage("#");
+		Collections.shuffle(words);
+		Collections.shuffle(sessions);
+		players.get(sessions.get(0)).becomeDrawer();
+		currDrawer = sessions.get(0);
+		try {
+			sessions.get(0).getBasicRemote().sendText("*Your word is " + words.get(round));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Word is "  + words.get(round));
+		
     }
     public synchronized void leave(Session session) { sessions.remove(session); }
     public synchronized void sendMessage(String message) {
@@ -59,6 +93,8 @@ public class Room {
     		int sc = scores.get(Integer.parseInt(session.getId()));
     		sc += (600 - 6*(81-time));
     		scores.replace(Integer.parseInt(session.getId()), sc);
+    		players.get(session).addPoints(sc);
+    		players.get(currDrawer).addPoints(800/(playerCount-1));
     	} else if (result == 0) {
     		sendMessage("Player " + session.getId() + " Is Close!");
     	} else {
