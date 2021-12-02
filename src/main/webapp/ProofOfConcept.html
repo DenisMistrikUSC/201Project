@@ -18,11 +18,11 @@
             <button type="button" onclick="closeSocket();" >Quit</button>
     </div>
 	<div id="infoLabel">Sketch SC</div>
-	
+
 	<div id="Round"> </div>
 	<div id="Time"></div>
 	<div id="Prompt"></div>
-	
+
 	<textarea id="echoText" rows="5" cols="30"></textarea>
 	<form>
 		<input id="message" type="text">
@@ -31,7 +31,7 @@
 	<br>
 	<!-- Java script for websockets -->
      <script type="text/javascript">
-                       
+
             var connection;
             var messages = document.getElementById("messages");
            	var timer;
@@ -45,12 +45,12 @@
                 }
                 // Create a new instance of the websocket
                 connection = new WebSocket("ws://localhost:8080/SketchSC/endpoint1");
-                 
+
                 /* Binds the listeners to socket */
                 connection.onopen = function(event){
                     if(event.data === undefined)
                         return;
- 
+
                     writeResponse(event.data);
                 };
  				// # == all players arrived start the game,  & == recieve information about drawing, * == become drawer
@@ -70,15 +70,28 @@
                 	else{
                 		writeResponse(text);
                 	}
-                    
+
                 };
- 
+
                 connection.onclose = function(event){
                     writeResponse("Connection closed");
                 };
-                
+
             }
-           
+						
+						/*
+						Gets user name from session and sends to backend
+						*/
+						function sendUser(){
+							let data = sessionStorage.getItem('username');
+							$.post("---",
+							{
+								//user name data to pass along to server
+					    	user: data,
+
+							},function(data){});
+						}
+
             /* Send message to the server */
             function send(){
             	var text = message.value;
@@ -89,7 +102,7 @@
             		text += (timer);
             	}
                 connection.send(text);
-                
+
             }
            function signal(text){
         	   connection.send(text);
@@ -147,8 +160,8 @@
             		 }
             	 } , 1000);
             }
-           
-           
+
+
         </script>
 </body>
 </html>
