@@ -59,7 +59,7 @@ public class Utility
 	    }
 	    return opt[guess.length()][key.length()];
 	}
-	
+	ADas
 	private static int costOfSubstitution(char a, char b)
 	{
 		if(a==b) //NO CHANGE NEEDED
