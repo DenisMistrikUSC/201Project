@@ -6,15 +6,13 @@ public class Player implements Comparable<Player> {
 	Integer iconID;
 	boolean isGuest;
 	boolean isDrawing;
-	Session session;
 	
-	public Player(String name, boolean guest,Session s) {
+	public Player(String name, boolean guest) {
 		currPoints = 0;
 		this.username = name;
 		this.isGuest = guest;
 		//this.iconID = iconID;
 		isDrawing = false;
-		this.session = s;
 	}
 	public void becomeDrawer() {
 		isDrawing = true;
@@ -33,9 +31,6 @@ public class Player implements Comparable<Player> {
 	}
 	public Integer getPoints() {
 		return currPoints;
-	}
-	public Session getSession() {
-		return session;
 	}
 	public boolean isDrawing() {
 		return isDrawing;
