@@ -8,26 +8,35 @@ function login() {
 function signUpRedirect() {
     window.location.href = "signUp.html";
 }
+function guest() {
+	setUsername("g-");
+    window.location.href = "ProofOfConcept.html";
+}
 
 /*
 This function retrives user input and validates with the server
 */
 function signIn() {
     event.preventDefault();
-    var userName = document.getElementById("username-field").value;
-    var passWord = document.getElementById("password-field").value;
+    let userName = document.getElementById("username-field").value;
+    let passWord = document.getElementById("password-field").value;
     /*
     Post should request the JSON file containing the User and Icon
     to verify to user has an account
     */
     signInHTTPRequest(userName);
+
+}
+function guestName(){
+  let userName = document.getElementId("username-field").value;
+  let newUser = "g-"+userName;
 }
 
 
 function signUp() {
     event.preventDefault();
-    var userName = document.getElementById("username-field").value;
-    var passWord = document.getElementById("password-field").value;
+    let userName = document.getElementById("username-field").value;
+    let passWord = document.getElementById("password-field").value;
 
 }
 /*
@@ -45,7 +54,8 @@ function signInHTTPRequest(username) {
   sends back 401 response
   */
   function(data){
-    window.location.href = data;
+    //place game page link
+    location.href = ".html";
   }).fail(function (jqXHR){
     // add no user handling here
     let invalidUser = document.getElementById("username-field");
@@ -54,11 +64,44 @@ function signInHTTPRequest(username) {
     invalidPassword.classList.add('is-invalid');
   });
 }
+/*
+Saves data to sessionStorage, which is unique per client
+*/
+function setUsername(username){
+  sessionStorage.setItem('username',username)
+}
+/*
+To be called on the game page, this get the users username from the session
+*/
+function getUsername(){
+  let data = sessionStorage.getItem('username');
+  //place id of username el in DOM
+  document.getElementById("").innerHTML() = data;
+}
 
 /*
-Gets a random username back from the server then redirects to one of the game
-pages
+Attaches g- to user input and send to server
 */
 function playAsGuest() {
-  signInHTTPRequest("");
+  let username = document.getElementById("username-field").value;
+  let newuser = "g-" + username.toLowerCase().trim();
+  signInHTTPRequest(newuser);
+}
+
+
+
+//ignore below just another way
+
+
+/*
+This function should get username from the server then replace the dom element on
+the game page that contains the username
+*/
+function getUserName(){
+  $.get("---",function(data){
+    /*
+    looking for dom element that shows username
+    */
+    //document.getElementbyId("username").innerHTML() = data;
+  });
 }
