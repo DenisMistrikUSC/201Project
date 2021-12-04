@@ -25,6 +25,7 @@ function signIn() {
     to verify to user has an account
     */
     signInHTTPRequest(userName, passWord, "ValidateLogin.java");
+    setUsername(userName);
 
 }
 function guestName(){
@@ -38,6 +39,7 @@ function signUp() {
     let userName = document.getElementById("username-field").value;
     let passWord = document.getElementById("password-field").value;
     signInHTTPRequest(userName, passWord, "ValidateSignUp.java");
+    setUsername(userName);
 }
 /*
 Note to Backend: if username is blank player is a guest
