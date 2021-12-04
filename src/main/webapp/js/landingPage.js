@@ -24,7 +24,7 @@ function signIn() {
     Post should request the JSON file containing the User and Icon
     to verify to user has an account
     */
-    signInHTTPRequest(userName);
+    signInHTTPRequest(userName, passWord, "ValidateLogin.java");
 
 }
 function guestName(){
@@ -37,13 +37,13 @@ function signUp() {
     event.preventDefault();
     let userName = document.getElementById("username-field").value;
     let passWord = document.getElementById("password-field").value;
-    signInHTTPRequest(userName, passWord);
+    signInHTTPRequest(userName, passWord, "ValidateSignUp.java");
 }
 /*
 Note to Backend: if username is blank player is a guest
 */
-function signInHTTPRequest(username, password) {
-  $.post("---",
+function signInHTTPRequest(username, password, file) {
+  $.post(file,
   {
     //user name data to pass along to server
     user: username.toLowerCase(),
