@@ -37,16 +37,17 @@ function signUp() {
     event.preventDefault();
     let userName = document.getElementById("username-field").value;
     let passWord = document.getElementById("password-field").value;
-
+    signInHTTPRequest(userName, passWord);
 }
 /*
 Note to Backend: if username is blank player is a guest
 */
-function signInHTTPRequest(username) {
+function signInHTTPRequest(username, password) {
   $.post("---",
   {
     //user name data to pass along to server
     user: username.toLowerCase(),
+    pass: password.toLowerCase()
   },
   /*
   if the post succeeds redirect to either drawing page or watching page,
@@ -55,7 +56,9 @@ function signInHTTPRequest(username) {
   */
   function(data){
     //place game page link
-    location.href = ".html";
+    if(data === 1){
+      location.href = "ProofOfConcept.html";
+    }
   }).fail(function (jqXHR){
     // add no user handling here
     let invalidUser = document.getElementById("username-field");
@@ -104,4 +107,15 @@ function getUserName(){
     */
     //document.getElementbyId("username").innerHTML() = data;
   });
+}
+function setUsername(username){
+  sessionStorage.setItem('username',username)
+}
+/*
+To be called on the game page, this get the users username from the session
+*/
+function getUsername(){
+  let data = sessionStorage.getItem('username');
+  //place id of username el in DOM
+  document.getElementById("").innerHTML() = data;
 }
