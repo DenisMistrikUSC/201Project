@@ -6,18 +6,21 @@
 <script src="p5.js"></script>
 <script type="text/javascript">
 	function setup(){
-   		createCanvas(500,500);
+        var myCanvas = createCanvas(400,400);
+			myCanvas.parent("idDiv");
    		background(255);
 }
 </script>
+<link rel="stylesheet" href="gameplaystyle.css">
 </head>
 <body>
-	<div>
+	<div class=buttonConnect>
             <button type="button" onclick="openSocket();" >Connect</button>
             <button type="button" onclick="sendUser();" >Start Game</button>
             <button type="button" onclick="closeSocket();" >Quit</button>
     </div>
-	<div id="infoLabel">Sketch SC</div>
+    <br>
+	<h1>Sketch SC</h1>
 	
 	<div id="Round"> </div>
 	<div id="Time"></div>
@@ -26,9 +29,14 @@
 	<textarea id="echoText" rows="5" cols="30"></textarea>
 	<form>
 		<input id="message" type="text">
-		<input onclick="send();" value="Send" type="button">
+		<input onclick="send();" class="buttonSend" value="Send" type="button">
 	</form>
 	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="idDiv">
 	<!-- Java script for websockets -->
      <script type="text/javascript">
                        

@@ -1,0 +1,140 @@
+:root
+{
+    --cardinal: rgb(224, 9, 9);
+    --gold: rgb(251, 253, 110);
+}
+
+body
+{
+    background-image: url("https://i.ibb.co/MVr1QGh/background.png");
+}
+h1
+{
+    text-align: center;
+    
+    color:white;
+    background-color: var(--cardinal);
+    
+    font-size: 50px;
+    font-family: Chalkduster;
+
+    margin-top: 65px;
+    margin-bottom: 50px;
+    
+    margin-right: 150px;
+    margin-left: 150px;
+}
+
+#gameGoesHere
+{
+    float: left;
+    width: 500px;
+    height: 400px;
+    border: 15px solid var(--cardinal);
+    color: black;
+    font-family: sans-serif;
+    margin-left: 20px;
+}
+#echoText
+{
+    position: relative;
+    top:150px;
+    float: right;
+    width: 300px;
+    height: 200px;
+    border: 10px solid var(--cardinal);
+    color: black;
+    font-family: sans-serif;
+}
+
+#message
+{
+    position: relative;
+    top:400px;
+    left:180px;
+    float: right;
+    width: 150px;
+    height: 15px;
+    border: 5px solid var(--cardinal);
+    color: black;
+    font-family: sans-serif;
+}
+
+#yourScoreHere
+{
+    margin-right: 20px;
+    float: right;
+    width: 300px;
+    height: 50px;
+    border: 15px solid var(--cardinal);
+    color: black;
+}
+
+button
+{
+    border: none;
+    background-color: white;
+    color: var(--cardinal);
+    text-align: center;
+    font-size: 18px;
+}
+
+textarea
+{
+    resize: none;
+}
+
+.button1
+{
+    background-color: rgb(20, 107, 220);
+    position:relative; 
+    left:250px; 
+    top:400px;
+}
+.buttonSend
+{
+	float: right;
+    background-color: rgb(134, 236, 255);
+    position:relative; 
+    left:400px; 
+    top:400px;
+}
+.buttonConnect
+{
+	float: left;
+    background-color: var(--cardinal);
+    position:relative;
+    top:200px;
+    border: 5px solid var(--cardinal);
+}
+
+ .avatar
+ {
+    vertical-align: middle;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+ }
+
+ .avatars {
+    display: inline-block;
+    position:relative; 
+    left:-200px; 
+    top:100px;
+
+ }
+ .avatars label input[type="radio"]{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+ }
+
+ #idDiv
+ {
+    width: 400px;
+    height: 400px;
+    border: 10px solid var(--cardinal);
+ }
