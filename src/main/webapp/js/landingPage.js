@@ -24,7 +24,7 @@ function signIn() {
     Post should request the JSON file containing the User and Icon
     to verify to user has an account
     */
-    signInHTTPRequest(userName, passWord, "ValidateLogin.java");
+    signInHTTPRequest(userName, passWord, "loginPage");
     setUsername(userName);
 
 }
@@ -38,13 +38,14 @@ function signUp() {
     event.preventDefault();
     let userName = document.getElementById("username-field").value;
     let passWord = document.getElementById("password-field").value;
-    signInHTTPRequest(userName, passWord, "ValidateSignUp.java");
+    signInHTTPRequest(userName, passWord, "SignupPage");
     setUsername(userName);
 }
 /*
 Note to Backend: if username is blank player is a guest
 */
 function signInHTTPRequest(username, password, file) {
+	
   $.post(file,
   {
     //user name data to pass along to server
@@ -57,15 +58,16 @@ function signInHTTPRequest(username, password, file) {
   sends back 401 response
   */
   function(data){
+	console.log(data);
     //place game page link
-    if(data === 1){
-      location.href = "ProofOfConcept.html";
+    if(parseInt(data) == 1){
+      window.location.href = "ProofOfConcept.html";
     }
   }).fail(function (jqXHR){
     // add no user handling here
     let invalidUser = document.getElementById("username-field");
     invalidUser.classList.add('is-invalid');
-    let invalidPassword = document.getElementId("password-field");
+    let invalidPassword = document.getElementById("password-field");
     invalidPassword.classList.add('is-invalid');
   });
 }
